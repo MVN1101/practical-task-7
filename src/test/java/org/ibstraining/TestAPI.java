@@ -7,42 +7,52 @@ import io.restassured.path.xml.XmlPath;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
 public class TestAPI {
 
-    @Test
-    public void test() {
+
+
+    @ParameterizedTest
+    @CsvSource(value = {
+            "Кабачок, VEGETABLE, false",
+            "Свекла, VEGETABLE, true",
+            "Банан, FRUIT, false",
+            "Гро-мишель, FRUIT, true"
+    })
+    public void test(String fruitName, String type, Boolean isExotic) {
+        String sessionId;
         Response response = given()
                 .baseUri("http://localhost:8080")
                 .when()
                 .get("/api/food");
 
-        String cookie = response.getCookie("JSESSIONID");
-        System.out.println("\n\n\n" + cookie + "\n\n\n");
-
+        sessionId = response.getCookie("JSESSIONID");
 
         given()
                 .baseUri("http://localhost:8080")
-                .sessionId(cookie)
+                .sessionId(sessionId)
                 .contentType(ContentType.JSON)
                 .body("{\n" +
-                        "   \"name\": \"Кабачок\",\n" +
-                        "   \"type\": \"FRUIT\",\n" +
-                        "   \"exotic\": true \n" +
+                        "   \"name\":  \"" + fruitName + "\",\n" +
+                        "   \"type\":   \"" + type + "\",\n" +
+                        "   \"exotic\": "+  isExotic + " \n" +
                         "}")
                 .basePath("/api/food")
                 .when()
-//                .log().all()
+                .log().all()
                 .post()
                 .then()
                 .log().all();
 
+
         given()
                 .baseUri("http://localhost:8080")
-                .sessionId(cookie)
+                .sessionId(sessionId)
                 .log().all()
                 .when()
                 .get("/api/food")
