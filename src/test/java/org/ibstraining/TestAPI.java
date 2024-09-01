@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
+import javax.sound.midi.Soundbank;
+
+import java.util.List;
+
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.not;
@@ -36,10 +40,14 @@ public class TestAPI {
                 .when()
                 .get();
 
+
 //        проверка того, что список товаров не пустой
         response.then()
                 .assertThat()
                 .body("", not(empty()));
+
+//        получение количество записей в списке товаров
+        int countOfProducts = response.then().extract().body().jsonPath().getList("").size();
 
 //        получение cookie по имени для последующей работы в рамках одной сессии
         sessionId = response.getCookie("JSESSIONID");
@@ -53,9 +61,7 @@ public class TestAPI {
                         "   \"exotic\": " + isExotic + " \n" +
                         "}")
                 .when()
-                .post()
-                .then()
-                .assertThat();
+                .post();
 
 //        запрос списка после добавления товара
         response = given()
@@ -64,30 +70,17 @@ public class TestAPI {
                 .get();
 
 //        проверка наличия добавленного товара в списке
-        Assertions.assertEquals(fruitName, response.jsonPath().getString("name[4]"), "товар не добавлен");
-        Assertions.assertEquals(type, response.jsonPath().getString("type[4]"), "товар не добавлен");
-        Assertions.assertEquals(isExotic, response.jsonPath().getBoolean("exotic[4]"), "товар не добавлен");
+        Assertions.assertEquals(fruitName, response.jsonPath().getString(
+                "name[" + countOfProducts + "]"),
+                "товар не добавлен");
+        Assertions.assertEquals(type, response.jsonPath().getString(
+                "type[" + countOfProducts + "]"),
+                "товар не добавлен");
+        Assertions.assertEquals(isExotic, response.jsonPath().getBoolean(
+                "exotic[" + countOfProducts + "]"),
+                "товар не добавлен");
 
-//                .then()
-//                .assertThat()
-//                .log().all()
-//                .assertThat()
-//                .extract()
-//
-//
-//
-//                .jsonPath().getList("name")
-//                ;
-////                .jsonPath().getList("name[1]", ProductPojo.class);
-//
-//        System.out.println(list);
-
-
-//
-//
-//
-//
+        System.out.println("Успешно добален товар: " + fruitName +", " + type + ", экзотический: " + isExotic);
 
     }
-
 }
