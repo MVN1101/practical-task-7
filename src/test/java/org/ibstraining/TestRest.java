@@ -6,10 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import javax.sound.midi.Soundbank;
-
-import java.util.List;
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.not;
@@ -18,7 +14,7 @@ import static org.hamcrest.Matchers.not;
  * @author Vikor_Mikhaylov
  * Класс для прогонки параметризированного теста корректности добавления товара с помощью API
  */
-public class TestAPI {
+public class TestRest {
 
     @ParameterizedTest
     @CsvSource(value = {

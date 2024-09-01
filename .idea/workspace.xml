@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="f3c84569-efcd-4968-ac06-89ba93851f3f" name="Changes" comment="добавлен класс Specifications">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/pojos/ProductPojo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/org/ibstraining/TestAPI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/ibstraining/TestAPI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,15 +34,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "last_opened_file_path": "C:/Users/vikto/IdeaProjects/practical-test-7",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/vikto/IdeaProjects/practical-test-7&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="TestAPI.addProductTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="practical-test-7" />
@@ -62,7 +60,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestAPI.addProductTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestRest.addProductTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="practical-test-7" />
       <extension name="coverage">
         <pattern>
@@ -71,7 +69,7 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="org.ibstraining" />
-      <option name="MAIN_CLASS_NAME" value="org.ibstraining.TestAPI" />
+      <option name="MAIN_CLASS_NAME" value="org.ibstraining.TestRest" />
       <option name="METHOD_NAME" value="addProductTest(java.lang.String,java.lang.String,java.lang.Boolean)" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
@@ -80,8 +78,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.TestAPI.addProductTest" />
-        <item itemvalue="JUnit.TestAPI.addProductTest" />
+        <item itemvalue="JUnit.TestRest.addProductTest" />
+        <item itemvalue="JUnit.TestRest.addProductTest" />
       </list>
     </recent_temporary>
   </component>
