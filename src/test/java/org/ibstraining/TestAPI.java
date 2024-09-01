@@ -16,8 +16,6 @@ import static org.hamcrest.Matchers.not;
  */
 public class TestAPI {
 
-    private String sessionId;
-
     @ParameterizedTest
     @CsvSource(value = {
             "Кабачок, VEGETABLE, false",
@@ -27,13 +25,16 @@ public class TestAPI {
     })
     public void addProductTest(String fruitName, String type, Boolean isExotic) {
 
+        String sessionId;
+
+        Specifications.installSpecification(Specifications.requestSpecification(
+                "http://localhost:8080", "/api/food", ContentType.JSON),
+                Specifications.responseSpecification(200));
+
 //        получение списка товаров
         Response response = given()
-                .baseUri("http://localhost:8080")
                 .when()
-                .get("/api/food");
-
-        Assertions.assertEquals(200, response.getStatusCode(), "список товаров не получен");
+                .get();
 
 //        проверка того, что список товаров не пустой
         response.then()
@@ -43,35 +44,29 @@ public class TestAPI {
 //        получение cookie по имени для последующей работы в рамках одной сессии
         sessionId = response.getCookie("JSESSIONID");
 
-
 //        добавление товара
         given()
-                .baseUri("http://localhost:8080")
                 .sessionId(sessionId)
-                .contentType(ContentType.JSON)
                 .body("{\n" +
                         "   \"name\":  \"" + fruitName + "\",\n" +
                         "   \"type\":   \"" + type + "\",\n" +
                         "   \"exotic\": " + isExotic + " \n" +
                         "}")
-                .basePath("/api/food")
                 .when()
                 .post()
                 .then()
-                .assertThat()
-                .statusCode(200);
+                .assertThat();
 
 //        запрос списка после добавления товара
         response = given()
-                .baseUri("http://localhost:8080")
                 .sessionId(sessionId)
                 .when()
-                .get("/api/food");
+                .get();
 
 //        проверка наличия добавленного товара в списке
-        Assertions.assertEquals(fruitName, response.jsonPath().getString("name[4]"));
-        Assertions.assertEquals(type, response.jsonPath().getString("type[4]"));
-        Assertions.assertEquals(isExotic, response.jsonPath().getBoolean("exotic[4]"));
+        Assertions.assertEquals(fruitName, response.jsonPath().getString("name[4]"), "товар не добавлен");
+        Assertions.assertEquals(type, response.jsonPath().getString("type[4]"), "товар не добавлен");
+        Assertions.assertEquals(isExotic, response.jsonPath().getBoolean("exotic[4]"), "товар не добавлен");
 
 //                .then()
 //                .assertThat()
